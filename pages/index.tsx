@@ -5,9 +5,8 @@ import { mockBookData } from "lib/constants";
 
 import type { NextPage } from "next";
 
-//TODO: Make book name generator for image placeholders.
+//TODO: Make sidebar menu toggleable
 //TODO: Connect to supabase
-//TODO: Deploy to vercel
 
 const Home: NextPage = () => {
 	return (
@@ -15,8 +14,9 @@ const Home: NextPage = () => {
 			<Sidebar />
 			<Flex flexDir="column" justifyContent="center" alignItems="center" width="100%">
 				<Grid
-					templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]}
-					gap={14}
+					templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]}
+					columnGap="7rem"
+					rowGap="3rem"
 				>
 					{mockBookData.map((book) => (
 						<Card book={book} key={book.id} />
