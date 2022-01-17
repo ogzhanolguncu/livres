@@ -1,60 +1,27 @@
-import { Box, Flex, Text, VStack, Image } from "@chakra-ui/react";
+import { Flex, Grid } from "@chakra-ui/react";
 import Card from "@components/Card";
-import faker from "@faker-js/faker";
-import { nanoid } from "nanoid";
+import Sidebar from "@components/Sidebar";
+import { mockBookData } from "lib/constants";
 
 import type { NextPage } from "next";
 
-const mockBookData = [
-	{
-		id: nanoid(),
-		name: faker.name.title(),
-		image: "https://via.placeholder.com/300",
-		author: faker.name.firstName(),
-		pageNumber: faker.datatype.number({
-			min: 70,
-			max: 250,
-		}),
-		isCompleted: false,
-	},
-	{
-		id: nanoid(),
-		name: faker.name.title(),
-		image: "https://via.placeholder.com/300",
-		author: faker.name.firstName(),
-		pageNumber: faker.datatype.number({
-			min: 70,
-			max: 250,
-		}),
-		isCompleted: false,
-	},
-	{
-		id: nanoid(),
-		name: faker.name.title(),
-		image: "https://via.placeholder.com/300",
-		author: faker.name.firstName(),
-		pageNumber: faker.datatype.number({
-			min: 70,
-			max: 250,
-		}),
-		isCompleted: true,
-	},
-];
+//TODO: Make book name generator for image placeholders.
+//TODO: Connect to supabase
+//TODO: Deploy to vercel
 
 const Home: NextPage = () => {
 	return (
-		<Flex
-			height="100vh"
-			width="100%"
-			justifyContent="center"
-			alignItems="center"
-			flexDir="column"
-			gap="2.5rem"
-		>
-			<Flex gap="2.5rem">
-				{mockBookData.map((book) => (
-					<Card book={book} key={book.id} />
-				))}
+		<Flex height="100vh">
+			<Sidebar />
+			<Flex flexDir="column" justifyContent="center" alignItems="center" width="100%">
+				<Grid
+					templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]}
+					gap={14}
+				>
+					{mockBookData.map((book) => (
+						<Card book={book} key={book.id} />
+					))}
+				</Grid>
 			</Flex>
 		</Flex>
 	);
