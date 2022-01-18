@@ -8,6 +8,7 @@ type Props = {
 const cardBreakPoints = ["100px", "240px", "240px", "300px"];
 const fontSizeBreakPoints = ["xl", "2xl", "2xl", "3xl"];
 const bookNameBreakPoints = ["2xl", "4xl", "4xl", "5xl"];
+const addButtonPaddingBreakPoints = ["0.25rem", "0.5rem", "0.75rem", "1rem"];
 
 const Card: FC<Props> = ({ book }) => {
   return (
@@ -36,7 +37,7 @@ const Card: FC<Props> = ({ book }) => {
             background="rgb(15 14 14 / 29%)"
             color="#f1f1f1"
             width="100%"
-            padding="1rem"
+            padding={addButtonPaddingBreakPoints}
             borderBottomRightRadius="md"
             borderBottomLeftRadius="md"
             cursor="pointer"
