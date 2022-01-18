@@ -30,7 +30,7 @@ const Home: NextPage = () => {
 					</Text>
 				</Flex>
 
-				<Flex gap="3rem" flexWrap="wrap" justifyContent="center" alignItems="center">
+				<Flex gap="3rem" flexWrap="wrap" justifyContent="center" alignItems="center" mx="0.5rem">
 					{mockBookData.map((book) => (
 						<Card book={book} key={book.id} />
 					))}
