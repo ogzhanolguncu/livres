@@ -13,23 +13,21 @@ const Sidebar = () => {
       alignItems="center"
       position="sticky"
       top="0"
+      borderRight="3px solid #916BBF"
     >
-      <Flex marginTop="1.5rem" flexDir="column">
+      <Flex marginTop="3rem" flexDir="column">
         <VStack align="flex-start" px="1rem" gap="3">
           <Heading size="4xl">
             <Link href="/">Livres</Link>
           </Heading>
           <Text fontSize="4xl">
-            <Link href="#">Login</Link>
+            <Link href="#">🔐 Sign-in</Link>
           </Text>
           <Text fontSize="4xl">
-            <Link href="#">My Profile</Link>
+            <Link href="#">☄️ Join</Link>
           </Text>
           <Text fontSize="4xl">
-            <Link href="#">My Book</Link>
-          </Text>
-          <Text fontSize="4xl">
-            <Link href="#">All time favorite</Link>
+            <Link href="#">📚 My Books</Link>
           </Text>
         </VStack>
       </Flex>

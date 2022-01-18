@@ -18,7 +18,7 @@ const Home: NextPage = () => {
         alignItems="center"
         flexWrap="wrap"
         gap="3rem"
-        my="2.5rem"
+        m="3rem"
       >
         {mockBookData.map((book) => (
           <Card book={book} key={book.id} />
