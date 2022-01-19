@@ -1,7 +1,10 @@
-import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex, Heading, Skeleton, Text } from "@chakra-ui/react";
 import Card from "@components/Card";
 import Sidebar from "@components/Sidebar";
 import { mockBookData } from "lib/constants";
+import { supabase } from "lib/supabaseClient";
+
+import type { PostgrestError } from "@supabase/supabase-js";
 
 import type { NextPage } from "next";
 import Link from "next/link";
@@ -10,11 +13,15 @@ import Link from "next/link";
 //TODO: Connect to supabase
 //TODO: Move book goal to below livres in mobile view
 
-const Home: NextPage = () => {
+type Props = {
+	books: Livre.Book[] | null;
+	error: PostgrestError | null;
+};
+
+const Home: NextPage<Props> = ({ books, error }) => {
 	return (
 		<Flex>
 			<Sidebar />
-
 			<Flex flexDirection="column" width="100%">
 				<Flex
 					flexDirection="row"
@@ -31,9 +38,11 @@ const Home: NextPage = () => {
 				</Flex>
 
 				<Flex gap="3rem" flexWrap="wrap" justifyContent="center" alignItems="center" mx="0.5rem">
-					{mockBookData.map((book) => (
-						<Card book={book} key={book.id} />
-					))}
+					{books && books.length > 0 ? (
+						books.map((book) => <Card book={book} key={book.id} />)
+					) : (
+						<Skeleton />
+					)}
 				</Flex>
 			</Flex>
 		</Flex>
@@ -41,3 +50,11 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export async function getServerSideProps() {
+	let { data: books, error } = await supabase.from<Livre.Book[]>("books").select("*");
+
+	return {
+		props: { books, error },
+	};
+}

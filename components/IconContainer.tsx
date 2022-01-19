@@ -21,9 +21,7 @@ const IconContainer = ({ text, icon, showTexts, href }: Props) => {
 	return (
 		<Flex>
 			<Text fontSize={fontSizeBreakPoints}>
-				<Link href={href} passHref>
-					<Icon as={icon} w={12} h={12} />
-				</Link>
+				<Icon as={icon} w={12} h={12} />
 			</Text>
 
 			<Text

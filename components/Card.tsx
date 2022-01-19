@@ -34,7 +34,7 @@ const Card: FC<Props> = ({ book }) => {
 						{book.name}
 					</Text>
 				</Flex>
-				{!book.isCompleted && (
+				{book.status === 0 && (
 					<Text
 						position="absolute"
 						bottom="0"
@@ -55,7 +55,7 @@ const Card: FC<Props> = ({ book }) => {
 			<VStack align="flex-start" px="0.5rem" mt="1.5rem" maxWidth="300px">
 				<Text fontSize={fontSizeBreakPoints}>Author: {book.author}</Text>
 				<Text fontSize={fontSizeBreakPoints}>Page Number: {book.pageNumber}</Text>
-				<Text fontSize={fontSizeBreakPoints}>Completion: {book.isCompleted ? "✔️" : "⌛"}</Text>
+				<Text fontSize={fontSizeBreakPoints}>Completion: {book.status === 0 ? "✔️" : "⌛"}</Text>
 			</VStack>
 		</Flex>
 	);

@@ -41,7 +41,7 @@ const Sidebar = () => {
 					</Text>
 
 					<IconContainer icon={FaSignInAlt} text="Sign-in" showTexts={flag} href="#" />
-					<IconContainer icon={FaMeteor} text="Join" showTexts={flag} href="#" />
+					<IconContainer icon={FaMeteor} text="Join" showTexts={flag} href="/auth" />
 					<IconContainer icon={GiBookshelf} text="My Books" showTexts={flag} href="#" />
 				</VStack>
 			</Flex>
