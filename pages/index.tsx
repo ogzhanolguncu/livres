@@ -9,9 +9,10 @@ import type { PostgrestError } from "@supabase/supabase-js";
 import type { NextPage } from "next";
 import Link from "next/link";
 
-//TODO: Make sidebar menu toggleable
-//TODO: Connect to supabase
-//TODO: Move book goal to below livres in mobile view
+//TODO: add livres dashboard icon to return to home
+//TODO: ADD GITHUB LOGIN
+//TODO: FIX VALIDATION ERROR
+//TODO: FIX NEXT LINK ERROR
 
 type Props = {
 	books: Livre.Book[] | null;
