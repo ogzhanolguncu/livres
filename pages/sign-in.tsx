@@ -16,6 +16,7 @@ export default function Auth() {
 	const {
 		register,
 		handleSubmit,
+		reset,
 		control,
 		formState: { errors, isSubmitting },
 	} = useForm<{ email: string }>({
@@ -28,8 +29,10 @@ export default function Auth() {
 		try {
 			await supabase.auth.signIn({ email });
 			setSentStatus("Sent");
+			reset();
 		} catch (error) {
 			setSentStatus("Error");
+			reset();
 		}
 	};
 	return (
@@ -72,6 +75,7 @@ export default function Auth() {
 						fontSize="2rem"
 						variant="solid"
 						disabled={isSubmitting}
+						isLoading={isSubmitting}
 						backgroundColor="gray.100"
 						_hover={{
 							backgroundColor: "gray.300",

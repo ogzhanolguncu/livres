@@ -1,8 +1,7 @@
 import React from "react";
-import { Button, Center, Tooltip } from "@chakra-ui/react";
-import { FaSignInAlt } from "react-icons/fa";
+import { Button, Center, Tooltip, Text, Box } from "@chakra-ui/react";
+import { FaSignInAlt, FaMeteor } from "react-icons/fa";
 import { GiBookshelf } from "react-icons/gi";
-import { CgClipboard } from "react-icons/cg";
 import Link from "next/link";
 
 const Sidebar = () => {
@@ -17,6 +16,25 @@ const Sidebar = () => {
 			flexDir="column"
 			bg="#3d2c8d8c"
 		>
+			<Link href="/" passHref>
+				<div>
+					<Tooltip label="Livres" placement="right" fontSize="1.5rem" hasArrow>
+						<Center
+							width={["40px", "40px", "65px", "65px"]}
+							height={["40px", "40px", "65px", "65px"]}
+							borderRadius="0.3rem"
+							backgroundColor="#916BBF"
+							aria-label="livres"
+							fontSize={["2rem", "2rem", "3rem", "5rem"]}
+							_hover={{ background: "#916BBF", color: "#fff" }}
+							_focus={{ background: "transparent", outline: "none" }}
+							_active={{ background: "transparent" }}
+						>
+							<Text marginTop="0.5rem">Li</Text>
+						</Center>
+					</Tooltip>
+				</div>
+			</Link>
 			<Link href="/sign-in" passHref>
 				<div>
 					<Tooltip label="Sign In" placement="right" fontSize="1.5rem" hasArrow>
@@ -33,13 +51,13 @@ const Sidebar = () => {
 					</Tooltip>
 				</div>
 			</Link>
-			<Link href="/sign-up" passHref>
+			<Link href="#" passHref>
 				<div>
 					<Tooltip label="Sign Up" placement="right" fontSize="1.5rem" hasArrow>
 						<Button
 							my="1rem"
 							aria-label="sign-up"
-							leftIcon={<CgClipboard />}
+							leftIcon={<FaMeteor />}
 							bg="transparent"
 							fontSize={["2rem", "2rem", "2.5rem", "3rem"]}
 							_hover={{ background: "transparent", color: "#e76bde" }}
