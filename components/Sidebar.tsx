@@ -1,66 +1,75 @@
 import React from "react";
-import { Flex, VStack, Text, useBoolean, Icon } from "@chakra-ui/react";
-import IconContainer from "./IconContainer";
-import { FaSignInAlt, FaMeteor, FaHamburger } from "react-icons/fa";
+import { Button, Center, Tooltip } from "@chakra-ui/react";
+import { FaSignInAlt } from "react-icons/fa";
 import { GiBookshelf } from "react-icons/gi";
+import { CgClipboard } from "react-icons/cg";
+import Link from "next/link";
 
 const Sidebar = () => {
-  const [flag, setFlag] = useBoolean(true);
-
   return (
-    <Flex
-      height="100vh"
-      backgroundColor="#3d2c8d8c"
-      width={flag ? ["20%", "15%", "20%", "10%"] : ["55%", "30%", "30%", "25%"]}
-      flexDir="column"
-      justifyContent="flex-start"
-      alignItems="center"
-      position="sticky"
+    <Center
+      w="15%"
+      h="100vh"
+      pos="sticky"
       top="0"
-      borderRight="3px solid #916BBF"
+      borderRight="1px solid white"
+      flexDir="column"
+      bg="#3d2c8d8c"
     >
-      <Flex marginTop="2rem" flexDir="column">
-        <VStack
-          alignItems={
-            flag
-              ? ["center", "center", "center", "flex-start"]
-              : ["flex-start", "flex-start", "flex-start", "flex-start"]
-          }
-          px="1rem"
-          gap="3"
-        >
-          <Text
-            width="100%"
-            textAlign="center"
-            fontSize="4xl"
-            cursor="pointer"
-            onClick={setFlag.toggle}
-            display={["block", "block", "block", "none"]}
+      <Link href="/sign-in" passHref>
+        <div>
+          <Tooltip label="Sign In" placement="right" fontSize="1.5rem" hasArrow>
+            <Button
+              my="1rem"
+              aria-label="sign-in"
+              leftIcon={<FaSignInAlt />}
+              bg="transparent"
+              fontSize={["2rem", "2rem", "2.5rem", "3rem"]}
+              _hover={{ background: "transparent", color: "#e76bde" }}
+              _focus={{ background: "transparent", outline: "none" }}
+              _active={{ background: "transparent" }}
+            />
+          </Tooltip>
+        </div>
+      </Link>
+      <Link href="/sign-up" passHref>
+        <div>
+          <Tooltip label="Sign Up" placement="right" fontSize="1.5rem" hasArrow>
+            <Button
+              my="1rem"
+              aria-label="sign-up"
+              leftIcon={<CgClipboard />}
+              bg="transparent"
+              fontSize={["2rem", "2rem", "2.5rem", "3rem"]}
+              _hover={{ background: "transparent", color: "#e76bde" }}
+              _focus={{ background: "transparent", outline: "none" }}
+              _active={{ background: "transparent" }}
+            />
+          </Tooltip>
+        </div>
+      </Link>
+      <Link href="#" passHref>
+        <div>
+          <Tooltip
+            label="My Books"
+            placement="right"
+            fontSize="1.5rem"
+            hasArrow
           >
-            <Icon as={FaHamburger} w={12} h={12} />
-          </Text>
-
-          <IconContainer
-            icon={FaSignInAlt}
-            text="Sign-in"
-            showTexts={flag}
-            href="#"
-          />
-          <IconContainer
-            icon={FaMeteor}
-            text="Join"
-            showTexts={flag}
-            href="/sign-in"
-          />
-          <IconContainer
-            icon={GiBookshelf}
-            text="My Books"
-            showTexts={flag}
-            href="#"
-          />
-        </VStack>
-      </Flex>
-    </Flex>
+            <Button
+              my="1rem"
+              aria-label="my-books"
+              leftIcon={<GiBookshelf />}
+              bg="transparent"
+              fontSize={["2rem", "2rem", "2.5rem", "3rem"]}
+              _hover={{ background: "transparent", color: "#e76bde" }}
+              _focus={{ background: "transparent", outline: "none" }}
+              _active={{ background: "transparent" }}
+            />
+          </Tooltip>
+        </div>
+      </Link>
+    </Center>
   );
 };
 

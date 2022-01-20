@@ -1,4 +1,4 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { Center, ChakraProvider } from "@chakra-ui/react";
 import theme from "@styles/theme";
 import { supabase } from "lib/supabaseClient";
 import { useRouter } from "next/router";
@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 
 import type { AppProps } from "next/app";
 import type { AuthChangeEvent, Session } from "@supabase/supabase-js";
+import Sidebar from '@components/Sidebar';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -55,7 +56,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <Center alignItems="flex-start" pos="relative">
+        <Sidebar />
+        <Component {...pageProps} />
+      </Center>
     </ChakraProvider>
   );
 }
