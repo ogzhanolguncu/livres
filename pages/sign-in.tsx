@@ -13,24 +13,37 @@ import {
 import Sidebar from "@components/Sidebar";
 import { supabase } from "lib/supabaseClient";
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const loginSchema = yup
+  .object({
+    email: yup.string().email().required(),
+  })
+  .required();
 
 export default function Auth() {
-  const [loading, setLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm<{ email: string }>({
+    resolver: yupResolver(loginSchema),
+  });
+
   const [sentStatus, setSentStatus] = useState<"Sent" | "Error" | undefined>();
-  const [email, setEmail] = useState("");
+  const [emailData, setEmailData] =
+    useState<{ email?: string; emailRequired?: boolean }>();
 
-  const isError = email === "" || null || undefined;
-
-  const handleLogin = async () => {
+  const handleLogin = async (data: any) => {
+    console.log({ data });
     try {
-      setLoading(true);
-      const { error } = await supabase.auth.signIn({ email });
-      if (error) throw error;
+      // const { error } = await supabase.auth.signIn({ email: emailData?.email });
       setSentStatus("Sent");
     } catch (error) {
       setSentStatus("Error");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -47,21 +60,31 @@ export default function Auth() {
           <Heading as="h1" size="4xl">
             Join Livres!
           </Heading>
-          <Text fontSize="3xl">Join via magic link with your email below</Text>
-          <FormControl isInvalid={isError}>
-            <Input
-              size="lg"
-              fontSize="2rem"
-              _placeholder={{
-                fontSize: "2rem",
-              }}
-              variant="outline"
-              type="email"
-              placeholder="Email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+          <Text fontSize="3xl">Join via magic link with your email below.</Text>
+          <FormControl
+            isInvalid={emailData?.emailRequired}
+            onSubmit={handleSubmit(handleLogin)}
+          >
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...register("email")}
+                  size="lg"
+                  fontSize="2rem"
+                  _placeholder={{
+                    fontSize: "2rem",
+                  }}
+                  variant="outline"
+                  type="email"
+                  placeholder="Email address"
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
             />
-            {isError && (
+            {errors.email && (
               <FormErrorMessage fontSize="2rem">
                 Email is required.
               </FormErrorMessage>
@@ -71,13 +94,18 @@ export default function Auth() {
           <Button
             color="#3D2C8D"
             size="lg"
+            type="submit"
             fontSize="2rem"
             variant="solid"
-            disabled={isError}
+            disabled={isSubmitting}
+            backgroundColor="gray.100"
+            _hover={{
+              backgroundColor: "gray.300",
+            }}
             onClick={handleLogin}
-            isLoading={loading}
+            isSubmitting={isSubmitting}
           >
-            <Box>{loading ? "Loading" : "Send magic link"}</Box>
+            <Box>{isSubmitting ? "Loading" : "Send magic link"}</Box>
           </Button>
           <Text fontSize="2rem" color="green.300">
             {sentStatus === "Sent" && "Check your email for the login link!"}
