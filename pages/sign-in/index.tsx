@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Box, Button, Flex, Heading, Input, Text } from '@chakra-ui/react';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { getProviders, signIn } from 'next-auth/react';
+import { loginSchema } from './validationSchema';
+import type { InferGetStaticPropsType } from 'next';
 
-const loginSchema = yup
-  .object({
-    email: yup
-      .string()
-      .email('Input must be valid email!')
-      .required('Email field is required!'),
-  })
-  .required();
+type InferedProviders = InferGetStaticPropsType<typeof getServerSideProps>;
 
-export default function Auth() {
+const SignIn = ({ providers }: InferedProviders) => {
   const {
     register,
     handleSubmit,
@@ -85,8 +80,28 @@ export default function Auth() {
             _hover={{
               backgroundColor: 'gray.300',
             }}
+            width="100%"
           >
             <Box>{isSubmitting ? 'Loading' : 'Send magic link'}</Box>
+          </Button>
+          <Button
+            width="100%"
+            mt="1rem"
+            color="#3D2C8D"
+            size="lg"
+            type="submit"
+            fontSize="2rem"
+            variant="solid"
+            backgroundColor="gray.100"
+            _hover={{
+              backgroundColor: 'gray.300',
+            }}
+            onClick={(event) => {
+              event.preventDefault();
+              signIn(providers?.github.id);
+            }}
+          >
+            <Box>Join with Github</Box>
           </Button>
         </form>
 
@@ -99,4 +114,12 @@ export default function Auth() {
       </Flex>
     </Flex>
   );
+};
+
+export default SignIn;
+export async function getServerSideProps() {
+  const providers = await getProviders();
+  return {
+    props: { providers },
+  };
 }

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Center, ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Flex } from '@chakra-ui/react';
 import theme from '@styles/theme';
+import { SessionProvider } from 'next-auth/react';
 
 import type { AppProps } from 'next/app';
 import Sidebar from '@components/Sidebar';
@@ -8,10 +9,12 @@ import Sidebar from '@components/Sidebar';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <Center alignItems="flex-start">
-        <Sidebar />
-        <Component {...pageProps} />
-      </Center>
+      <SessionProvider session={pageProps.session}>
+        <Flex>
+          <Sidebar />
+          <Component {...pageProps} />
+        </Flex>
+      </SessionProvider>
     </ChakraProvider>
   );
 }

@@ -4,7 +4,8 @@ import Card from '@components/Card';
 
 import type { InferGetStaticPropsType } from 'next';
 import Link from 'next/link';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@lib/prisma';
+import { useSession } from 'next-auth/react';
 
 //TODO: ADD GITHUB LOGIN
 //TODO: FIX VALIDATION ERROR
@@ -13,6 +14,9 @@ import { PrismaClient } from '@prisma/client';
 type InferedBook = InferGetStaticPropsType<typeof getStaticProps>;
 
 const Home = ({ books }: InferedBook) => {
+  const { data: session, status } = useSession();
+  console.log({ session, status });
+
   return (
     <Flex flexDirection="column" w="100%">
       <Flex
@@ -49,7 +53,6 @@ const Home = ({ books }: InferedBook) => {
 export default Home;
 
 export async function getStaticProps() {
-  const prisma = new PrismaClient();
   const books = await prisma.book.findMany();
   return {
     props: { books },
