@@ -1,24 +1,17 @@
 import { Flex, Heading, Skeleton, Text } from "@chakra-ui/react";
 import Card from "@components/Card";
-import { mockBookData } from "lib/constants";
-import { supabase } from "lib/supabaseClient";
 
-import type { PostgrestError } from "@supabase/supabase-js";
-
-import type { NextPage } from "next";
+import type { InferGetStaticPropsType } from "next";
 import Link from "next/link";
+import { PrismaClient } from "@prisma/client";
 
-//TODO: add livres dashboard icon to return to home
 //TODO: ADD GITHUB LOGIN
 //TODO: FIX VALIDATION ERROR
 //TODO: FIX NEXT LINK ERROR
 
-type Props = {
-	books: Livre.Book[] | null;
-	error: PostgrestError | null;
-};
+type InferedBook = InferGetStaticPropsType<typeof getStaticProps>;
 
-const Home: NextPage<Props> = ({ books, error }) => {
+const Home = ({ books }: InferedBook) => {
 	return (
 		<Flex flexDirection="column" w="100%">
 			<Flex
@@ -48,10 +41,10 @@ const Home: NextPage<Props> = ({ books, error }) => {
 
 export default Home;
 
-export async function getServerSideProps() {
-	let { data: books, error } = await supabase.from<Livre.Book[]>("books").select("*");
-
+export async function getStaticProps() {
+	const prisma = new PrismaClient();
+	const books = await prisma.book.findMany();
 	return {
-		props: { books, error },
+		props: { books },
 	};
 }

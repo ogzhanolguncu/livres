@@ -1,0 +1,25 @@
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+model Book {
+  id         String  @id @default(cuid())
+  name       String
+  author     String
+  pageNumber String
+  genres     Genre[] @relation(references: [id])
+}
+
+model Genre {
+  id    Int    @id @default(autoincrement())
+  name  String
+  books Book[] @relation(references: [id])
+}

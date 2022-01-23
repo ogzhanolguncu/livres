@@ -1,8 +1,9 @@
 import React, { FC } from "react";
-import { Flex, VStack, Image, Text, Box } from "@chakra-ui/react";
+import { Flex, VStack, Text, Box } from "@chakra-ui/react";
+import { Book } from "@prisma/client";
 
 type Props = {
-	book: Livre.Book;
+	book: Book;
 };
 
 const cardBreakPoints = ["100px", "240px", "240px", "300px"];
@@ -34,7 +35,7 @@ const Card: FC<Props> = ({ book }) => {
 						{book.name}
 					</Text>
 				</Flex>
-				{book.status === 0 && (
+				{/* {book.status === 0 && (
 					<Text
 						position="absolute"
 						bottom="0"
@@ -49,13 +50,13 @@ const Card: FC<Props> = ({ book }) => {
 					>
 						Add To Lib
 					</Text>
-				)}
+				)} */}
 			</Box>
 
 			<VStack align="flex-start" px="0.5rem" mt="1.5rem" maxWidth="300px">
 				<Text fontSize={fontSizeBreakPoints}>Author: {book.author}</Text>
 				<Text fontSize={fontSizeBreakPoints}>Page Number: {book.pageNumber}</Text>
-				<Text fontSize={fontSizeBreakPoints}>Completion: {book.status === 0 ? "✔️" : "⌛"}</Text>
+				{/* <Text fontSize={fontSizeBreakPoints}>Completion: {book.status === 0 ? "✔️" : "⌛"}</Text> */}
 			</VStack>
 		</Flex>
 	);
