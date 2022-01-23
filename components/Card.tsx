@@ -1,21 +1,21 @@
-import React, { FC } from "react";
-import { Flex, VStack, Text, Box } from "@chakra-ui/react";
-import { Book } from "@prisma/client";
+import React, { FC } from 'react';
+import { Flex, VStack, Text, Box } from '@chakra-ui/react';
+import { Book } from '@prisma/client';
 
 type Props = {
   book: Book;
 };
 
-const cardBreakPoints = ["100px", "240px", "240px", "300px"];
-const fontSizeBreakPoints = ["md", "2xl", "2xl", "3xl"];
-const bookNameBreakPoints = ["md", "4xl", "4xl", "5xl"];
+const cardBreakPoints = ['100px', '240px', '240px', '300px'];
+const fontSizeBreakPoints = ['md', '2xl', '2xl', '3xl'];
+const bookNameBreakPoints = ['md', '4xl', '4xl', '5xl'];
 
 const Card: FC<Props> = ({ book }) => {
   return (
     <Flex
       flexDirection="column"
       key={book.id}
-      alignItems={["center", "center", "flex-start", "flex-start"]}
+      alignItems={['center', 'center', 'flex-start', 'flex-start']}
     >
       <Box position="relative" width={cardBreakPoints} height={cardBreakPoints}>
         <Flex

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Flex, Heading, Skeleton, Text } from '@chakra-ui/react';
 import Card from '@components/Card';
 

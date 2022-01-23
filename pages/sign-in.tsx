@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Box, Button, Flex, Heading, Input, Text } from '@chakra-ui/react';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const loginSchema = yup
   .object({
     email: yup
       .string()
-      .email("Input must be valid email!")
-      .required("Email field is required!"),
+      .email('Input must be valid email!')
+      .required('Email field is required!'),
   })
   .required();
 
@@ -24,14 +24,14 @@ export default function Auth() {
     resolver: yupResolver(loginSchema),
   });
 
-  const [sentStatus, setSentStatus] = useState<"Sent" | "Error" | undefined>();
+  const [sentStatus, setSentStatus] = useState<'Sent' | 'Error' | undefined>();
 
-  const onSubmit = async ({ email }: { email: string }) => {
+  const onSubmit = async () => {
     try {
-      setSentStatus("Sent");
+      setSentStatus('Sent');
       reset();
     } catch (error) {
-      setSentStatus("Error");
+      setSentStatus('Error');
       reset();
     }
   };
@@ -53,17 +53,17 @@ export default function Auth() {
             control={control}
             render={({ field }) => (
               <Input
-                {...register("email")}
+                {...register('email')}
                 size="lg"
                 fontSize="2rem"
                 pl="0.5rem"
                 _placeholder={{
-                  fontSize: "2rem",
+                  fontSize: '2rem',
                 }}
                 variant="outline"
                 type="email"
                 placeholder="Email address"
-                value={field.value || ""}
+                value={field.value || ''}
                 onChange={field.onChange}
               />
             )}
@@ -83,18 +83,18 @@ export default function Auth() {
             isLoading={isSubmitting}
             backgroundColor="gray.100"
             _hover={{
-              backgroundColor: "gray.300",
+              backgroundColor: 'gray.300',
             }}
           >
-            <Box>{isSubmitting ? "Loading" : "Send magic link"}</Box>
+            <Box>{isSubmitting ? 'Loading' : 'Send magic link'}</Box>
           </Button>
         </form>
 
         <Text fontSize="2rem" color="green.300">
-          {sentStatus === "Sent" && "Check your email for the login link!"}
+          {sentStatus === 'Sent' && 'Check your email for the login link!'}
         </Text>
         <Text fontSize="2rem" color="red.500">
-          {sentStatus === "Error" && "Something went wrong!"}
+          {sentStatus === 'Error' && 'Something went wrong!'}
         </Text>
       </Flex>
     </Flex>

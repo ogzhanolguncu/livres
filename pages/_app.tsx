@@ -1,3 +1,4 @@
+import React from 'react';
 import { Center, ChakraProvider } from '@chakra-ui/react';
 import theme from '@styles/theme';
 
