@@ -23,22 +23,24 @@ const Sidebar = () => {
       bg="#3d2c8d8c"
     >
       <Link href="/" passHref>
-        <Tooltip label="Livres" placement="right" fontSize="1.5rem" hasArrow>
-          <Button
-            pt="1rem"
-            borderRadius="0.3rem"
-            aria-label="livres"
-            width={['40px', '40px', '65px', '65px']}
-            height={['40px', '40px', '65px', '65px']}
-            _hover={{ background: '#916BBF', color: '#fff' }}
-            _focus={{ outline: 'none' }}
-            backgroundColor="#916BBF"
-            marginTop="0.5rem"
-            fontSize={['2rem', '2rem', '3rem', '5rem']}
-          >
-            Li
-          </Button>
-        </Tooltip>
+        <div>
+          <Tooltip label="Livres" placement="right" fontSize="1.5rem" hasArrow>
+            <Button
+              pt="1rem"
+              borderRadius="0.3rem"
+              aria-label="livres"
+              width={['40px', '40px', '65px', '65px']}
+              height={['40px', '40px', '65px', '65px']}
+              _hover={{ background: '#916BBF', color: '#fff' }}
+              _focus={{ outline: 'none' }}
+              backgroundColor="#916BBF"
+              marginTop="0.5rem"
+              fontSize={['2rem', '2rem', '3rem', '5rem']}
+            >
+              Li
+            </Button>
+          </Tooltip>
+        </div>
       </Link>
 
       <SlideFade in={!loading}>
@@ -74,8 +76,7 @@ const Sidebar = () => {
           icon={FiLogOut}
           ariaLabel="log-out"
           label="Log out"
-          to="#"
-          onClick={() => signOut({ redirect: false, callbackUrl: '/' })}
+          onClick={() => signOut({ redirect: false, callbackUrl: '/sign-in' })}
           authStatus={status === 'authenticated'}
         />
       </SlideFade>

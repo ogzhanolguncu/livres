@@ -98,7 +98,9 @@ const SignIn = ({ providers }: InferedProviders) => {
             }}
             onClick={(event) => {
               event.preventDefault();
-              signIn(providers?.github.id);
+              signIn(providers?.github.id, {
+                callbackUrl: '/',
+              });
             }}
           >
             <Box>Join with Github</Box>
