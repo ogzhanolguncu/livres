@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Flex, VStack, Text, Box } from '@chakra-ui/react';
 import { Book } from '@prisma/client';
 
@@ -10,7 +10,7 @@ const cardBreakPoints = ['100px', '240px', '240px', '300px'];
 const fontSizeBreakPoints = ['md', '2xl', '2xl', '3xl'];
 const bookNameBreakPoints = ['md', '4xl', '4xl', '5xl'];
 
-const Card: FC<Props> = ({ book }) => {
+const Card = ({ book }: Props) => {
   return (
     <Flex
       flexDirection="column"

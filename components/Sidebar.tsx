@@ -1,10 +1,16 @@
 import React from 'react';
-import { Button, Center, Tooltip, Text } from '@chakra-ui/react';
+import { Button, Center, Fade, SlideFade, Tooltip } from '@chakra-ui/react';
 import { FaSignInAlt, FaMeteor } from 'react-icons/fa';
+import { FiLogOut } from 'react-icons/fi';
 import { GiBookshelf } from 'react-icons/gi';
 import Link from 'next/link';
+import NavItem from './NavItem';
+import { signOut, useSession } from 'next-auth/react';
 
 const Sidebar = () => {
+  const { status } = useSession();
+  const loading = status === 'loading';
+
   return (
     <Center
       w={['15%', '15%', '10%', '7.5%', '6%', '5%']}
@@ -17,77 +23,62 @@ const Sidebar = () => {
       bg="#3d2c8d8c"
     >
       <Link href="/" passHref>
-        <div>
-          <Tooltip label="Livres" placement="right" fontSize="1.5rem" hasArrow>
-            <Center
-              width={['40px', '40px', '65px', '65px']}
-              height={['40px', '40px', '65px', '65px']}
-              borderRadius="0.3rem"
-              backgroundColor="#916BBF"
-              aria-label="livres"
-              fontSize={['2rem', '2rem', '3rem', '5rem']}
-              _hover={{ background: '#916BBF', color: '#fff' }}
-              _focus={{ background: 'transparent', outline: 'none' }}
-              _active={{ background: 'transparent' }}
-            >
-              <Text marginTop="0.5rem">Li</Text>
-            </Center>
-          </Tooltip>
-        </div>
-      </Link>
-      <Link href="/sign-in" passHref>
-        <div>
-          <Tooltip label="Sign In" placement="right" fontSize="1.5rem" hasArrow>
-            <Button
-              my="1rem"
-              aria-label="sign-in"
-              leftIcon={<FaSignInAlt />}
-              bg="transparent"
-              fontSize={['2rem', '2rem', '2.5rem', '3rem']}
-              _hover={{ background: 'transparent', color: '#e76bde' }}
-              _focus={{ background: 'transparent', outline: 'none' }}
-              _active={{ background: 'transparent' }}
-            />
-          </Tooltip>
-        </div>
-      </Link>
-      <Link href="#" passHref>
-        <div>
-          <Tooltip label="Sign Up" placement="right" fontSize="1.5rem" hasArrow>
-            <Button
-              my="1rem"
-              aria-label="sign-up"
-              leftIcon={<FaMeteor />}
-              bg="transparent"
-              fontSize={['2rem', '2rem', '2.5rem', '3rem']}
-              _hover={{ background: 'transparent', color: '#e76bde' }}
-              _focus={{ background: 'transparent', outline: 'none' }}
-              _active={{ background: 'transparent' }}
-            />
-          </Tooltip>
-        </div>
-      </Link>
-      <Link href="#" passHref>
-        <div>
-          <Tooltip
-            label="My Books"
-            placement="right"
-            fontSize="1.5rem"
-            hasArrow
+        <Tooltip label="Livres" placement="right" fontSize="1.5rem" hasArrow>
+          <Button
+            pt="1rem"
+            borderRadius="0.3rem"
+            aria-label="livres"
+            width={['40px', '40px', '65px', '65px']}
+            height={['40px', '40px', '65px', '65px']}
+            _hover={{ background: '#916BBF', color: '#fff' }}
+            _focus={{ outline: 'none' }}
+            backgroundColor="#916BBF"
+            marginTop="0.5rem"
+            fontSize={['2rem', '2rem', '3rem', '5rem']}
           >
-            <Button
-              my="1rem"
-              aria-label="my-books"
-              leftIcon={<GiBookshelf />}
-              bg="transparent"
-              fontSize={['2rem', '2rem', '2.5rem', '3rem']}
-              _hover={{ background: 'transparent', color: '#e76bde' }}
-              _focus={{ background: 'transparent', outline: 'none' }}
-              _active={{ background: 'transparent' }}
-            />
-          </Tooltip>
-        </div>
+            Li
+          </Button>
+        </Tooltip>
       </Link>
+
+      <SlideFade in={!loading}>
+        <NavItem
+          icon={FaSignInAlt}
+          ariaLabel="sign-in"
+          label="Sign In"
+          to="/sign-in"
+          authStatus={status === 'unauthenticated'}
+        />
+      </SlideFade>
+      <SlideFade in={!loading}>
+        <NavItem
+          icon={FaMeteor}
+          ariaLabel="join"
+          label="Join"
+          to="#"
+          authStatus={status === 'unauthenticated'}
+        />
+      </SlideFade>
+
+      <SlideFade in={!loading}>
+        <NavItem
+          icon={GiBookshelf}
+          ariaLabel="my-books"
+          label="My Books"
+          to="#"
+          authStatus={status === 'authenticated'}
+        />
+      </SlideFade>
+      <SlideFade in={!loading}>
+        <NavItem
+          icon={FiLogOut}
+          ariaLabel="log-out"
+          label="Log out"
+          to="#"
+          onClick={() => signOut({ redirect: false, callbackUrl: '/' })}
+          authStatus={status === 'authenticated'}
+        />
+      </SlideFade>
     </Center>
   );
 };

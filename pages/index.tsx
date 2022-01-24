@@ -2,10 +2,10 @@ import React from 'react';
 import { Flex, Heading, Skeleton, Text } from '@chakra-ui/react';
 import Card from '@components/Card';
 
-import type { InferGetStaticPropsType } from 'next';
+import type { GetServerSidePropsContext, InferGetStaticPropsType } from 'next';
 import Link from 'next/link';
 import { prisma } from '@lib/prisma';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 
 //TODO: ADD GITHUB LOGIN
 //TODO: FIX VALIDATION ERROR
@@ -14,9 +14,6 @@ import { useSession } from 'next-auth/react';
 type InferedBook = InferGetStaticPropsType<typeof getStaticProps>;
 
 const Home = ({ books }: InferedBook) => {
-  const { data: session, status } = useSession();
-  console.log({ session, status });
-
   return (
     <Flex flexDirection="column" w="100%">
       <Flex
@@ -40,11 +37,8 @@ const Home = ({ books }: InferedBook) => {
         alignItems="center"
         mx="0.5rem"
       >
-        {books && books.length > 0 ? (
-          books.map((book) => <Card book={book} key={book.id} />)
-        ) : (
-          <Skeleton />
-        )}
+        {books.length > 0 &&
+          books.map((book) => <Card book={book} key={book.id} />)}
       </Flex>
     </Flex>
   );
