@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { Tooltip, Button } from '@chakra-ui/react';
 import type { IconType } from 'react-icons';
 
-type AuthStatuses = 'unauthenticated' | 'loading' | 'authenticated';
 type Props = {
   icon: IconType;
   ariaLabel: string;

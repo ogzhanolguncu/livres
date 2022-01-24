@@ -1,11 +1,10 @@
 import React from 'react';
-import { Flex, Heading, Skeleton, Text } from '@chakra-ui/react';
+import { Flex, Heading, Text } from '@chakra-ui/react';
 import Card from '@components/Card';
 
-import type { GetServerSidePropsContext, InferGetStaticPropsType } from 'next';
+import type { InferGetStaticPropsType } from 'next';
 import Link from 'next/link';
 import { prisma } from '@lib/prisma';
-import { getSession, useSession } from 'next-auth/react';
 
 //TODO: ADD GITHUB LOGIN
 //TODO: FIX VALIDATION ERROR
