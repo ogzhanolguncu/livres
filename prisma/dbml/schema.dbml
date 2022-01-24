@@ -1,0 +1,97 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Book {
+  id String [pk]
+  name String [not null]
+  author String [not null]
+  pageNumber String [not null]
+  desc String [not null]
+  rating Float [not null, default: 0]
+  reviewCount Int [not null, default: 0]
+  genres Genre [not null]
+  reviews Review [not null]
+  user User [not null]
+}
+
+Table Genre {
+  id Int [pk, increment]
+  name String [not null]
+  books Book [not null]
+}
+
+Table Review {
+  id String [pk]
+  spoiler Boolean [not null]
+  content String [not null]
+  book Book [not null]
+  bookId String [not null]
+}
+
+Table User {
+  id String [pk]
+  name String
+  email String [unique]
+  emailVerified DateTime
+  image String
+  accounts Account [not null]
+  sessions Session [not null]
+  books Book [not null]
+}
+
+Table Account {
+  id String [pk]
+  userId String [not null]
+  type String [not null]
+  provider String [not null]
+  providerAccountId String [not null]
+  refresh_token String
+  access_token String
+  expires_at Int
+  token_type String
+  scope String
+  id_token String
+  session_state String
+  oauth_token_secret String
+  oauth_token String
+  user User [not null]
+
+  indexes {
+    (provider, providerAccountId) [unique]
+  }
+}
+
+Table Session {
+  id String [pk]
+  sessionToken String [unique, not null]
+  userId String [not null]
+  expires DateTime [not null]
+  user User [not null]
+}
+
+Table VerificationToken {
+  identifier String [not null]
+  token String [unique, not null]
+  expires DateTime [not null]
+
+  indexes {
+    (identifier, token) [unique]
+  }
+}
+
+Table BookToGenre {
+  genresId Int [ref: > Genre.id]
+  booksId String [ref: > Book.id]
+}
+
+Table BookToUser {
+  userId String [ref: > User.id]
+  booksId String [ref: > Book.id]
+}
+
+Ref: Review.bookId > Book.id
+
+Ref: Account.userId > User.id [delete: Cascade]
+
+Ref: Session.userId > User.id [delete: Cascade]

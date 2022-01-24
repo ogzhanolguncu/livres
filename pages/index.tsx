@@ -6,9 +6,9 @@ import type { InferGetStaticPropsType } from 'next';
 import Link from 'next/link';
 import { prisma } from '@lib/prisma';
 
-//TODO: ADD GITHUB LOGIN
-//TODO: FIX VALIDATION ERROR
-//TODO: FIX NEXT LINK ERROR
+//TODO: ADD EMAIL - PASSWORD REGISTER
+//TODO: ADD TO LIB
+//TODO: ADD PAGE DETAIL
 
 type InferedBook = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -47,6 +47,7 @@ export default Home;
 
 export async function getStaticProps() {
   const books = await prisma.book.findMany();
+
   return {
     props: { books },
   };

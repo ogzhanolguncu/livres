@@ -10,18 +10,35 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
 model Book {
-  id         String  @id @default(cuid())
-  name       String
-  author     String
-  pageNumber String
-  genres     Genre[] @relation(references: [id])
+  id          String   @id @default(cuid())
+  name        String
+  author      String
+  pageNumber  String
+  desc        String
+  rating      Float    @default(0.0)
+  reviewCount Int      @default(0)
+  genres      Genre[]  @relation(references: [id])
+  reviews     Review[]
+  user        User[]   @relation(references: [id])
 }
 
 model Genre {
   id    Int    @id @default(autoincrement())
   name  String
   books Book[] @relation(references: [id])
+}
+
+model Review {
+  id      String  @id @default(cuid())
+  spoiler Boolean
+  content String
+  book    Book    @relation(fields: [bookId], references: [id])
+  bookId  String
 }
 
 model User {
@@ -32,6 +49,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  books         Book[]    @relation(references: [id])
 }
 
 model Account {
