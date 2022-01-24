@@ -76,7 +76,8 @@ const Sidebar = () => {
           icon={FiLogOut}
           ariaLabel="log-out"
           label="Log out"
-          onClick={() => signOut({ redirect: false, callbackUrl: '/sign-in' })}
+          to="#"
+          onClick={() => signOut({ redirect: true, callbackUrl: '/sign-in' })}
           authStatus={status === 'authenticated'}
         />
       </SlideFade>

@@ -99,6 +99,7 @@ const SignIn = ({ providers }: InferedProviders) => {
             onClick={(event) => {
               event.preventDefault();
               signIn(providers?.github.id, {
+                redirect: true,
                 callbackUrl: '/',
               });
             }}
