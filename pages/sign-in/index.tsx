@@ -14,15 +14,18 @@ const SignIn = ({ providers }: InferedProviders) => {
     handleSubmit,
     reset,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<{ email: string }>({
     resolver: yupResolver(loginSchema),
   });
 
   const [sentStatus, setSentStatus] = useState<'Sent' | 'Error' | undefined>();
 
-  const onSubmit = async () => {
+  const onSubmit = async (data: { email: string }) => {
     try {
+      signIn(providers?.email.id, {
+        email: data.email,
+      });
       setSentStatus('Sent');
       reset();
     } catch (error) {
@@ -67,6 +70,22 @@ const SignIn = ({ providers }: InferedProviders) => {
             {errors.email?.message}
           </Text>
 
+          <Button
+            width="100%"
+            mt="1rem"
+            color="#3D2C8D"
+            size="lg"
+            type="submit"
+            fontSize="2rem"
+            variant="solid"
+            backgroundColor="gray.100"
+            _hover={{
+              backgroundColor: 'gray.300',
+            }}
+            isLoading={isSubmitting}
+          >
+            <Box>Join with Email</Box>
+          </Button>
           <Button
             width="100%"
             mt="1rem"
