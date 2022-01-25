@@ -2,17 +2,19 @@ import React from 'react';
 import { Flex, Heading, Text } from '@chakra-ui/react';
 import Card from '@components/Card';
 
-import type { GetServerSidePropsContext } from 'next';
+import type {
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from 'next';
 import Link from 'next/link';
 import { prisma } from '@lib/prisma';
 import { getSession } from 'next-auth/react';
-import { Book } from '@prisma/client';
 
 //TODO: ADD EMAIL - PASSWORD REGISTER
 //TODO: ADD TO LIB
 //TODO: ADD PAGE DETAIL
 
-type InferedBook = { books: Book[] };
+type InferedBook = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const Dashboard = ({ books }: InferedBook) => {
   return (
@@ -38,7 +40,8 @@ const Dashboard = ({ books }: InferedBook) => {
         alignItems="center"
         mx="0.5rem"
       >
-        {books.length > 0 &&
+        {books &&
+          books.length > 0 &&
           books.map((book) => <Card book={book} key={book.id} />)}
       </Flex>
     </Flex>
@@ -53,6 +56,7 @@ export const getServerSideProps = async (
   const result = await getSession(context);
   if (!result) {
     return {
+      props: {},
       redirect: {
         permanent: false,
         destination: '/sign-in',
