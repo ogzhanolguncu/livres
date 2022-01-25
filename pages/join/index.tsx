@@ -8,7 +8,7 @@ import type { InferGetStaticPropsType } from 'next';
 
 type InferedProviders = InferGetStaticPropsType<typeof getServerSideProps>;
 
-const SignIn = ({ providers }: InferedProviders) => {
+const Join = ({ providers }: InferedProviders) => {
   const {
     register,
     handleSubmit,
@@ -39,9 +39,9 @@ const SignIn = ({ providers }: InferedProviders) => {
     >
       <Flex flexDirection="column" gap="1rem" maxWidth="370px">
         <Heading as="h1" size="4xl">
-          Sign in to Livres!
+          Join Livres!
         </Heading>
-        <Text fontSize="3xl">Sign in via Google, Github or Email.</Text>
+        <Text fontSize="3xl">Join via Google, Githun or Email.</Text>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="email"
@@ -66,7 +66,6 @@ const SignIn = ({ providers }: InferedProviders) => {
           <Text fontSize="2rem" color="red.500" pl="0.5rem">
             {errors.email?.message}
           </Text>
-
           <Button
             width="100%"
             mt="1rem"
@@ -83,33 +82,11 @@ const SignIn = ({ providers }: InferedProviders) => {
               event.preventDefault();
               signIn(providers?.github.id, {
                 redirect: true,
-                callbackUrl: '/',
+                callbackUrl: '/dashboard',
               });
             }}
           >
             <Box>Join with Github</Box>
-          </Button>
-          <Button
-            width="100%"
-            mt="1rem"
-            color="#3D2C8D"
-            size="lg"
-            type="submit"
-            fontSize="2rem"
-            variant="solid"
-            backgroundColor="gray.100"
-            _hover={{
-              backgroundColor: 'gray.300',
-            }}
-            onClick={(event) => {
-              event.preventDefault();
-              signIn(providers?.google.id, {
-                redirect: true,
-                callbackUrl: '/',
-              });
-            }}
-          >
-            <Box>Join with Google</Box>
           </Button>
         </form>
 
@@ -124,7 +101,7 @@ const SignIn = ({ providers }: InferedProviders) => {
   );
 };
 
-export default SignIn;
+export default Join;
 export async function getServerSideProps() {
   const providers = await getProviders();
   return {
