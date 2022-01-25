@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Box, Button, Flex, Heading, Input, Text } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { getProviders, signIn } from 'next-auth/react';
-import { loginSchema } from './validationSchema';
+import { loginSchema } from 'validations/signInValidationSchema';
 import type { InferGetStaticPropsType } from 'next';
 
 type InferedProviders = InferGetStaticPropsType<typeof getServerSideProps>;
