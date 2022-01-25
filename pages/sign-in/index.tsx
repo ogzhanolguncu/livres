@@ -100,7 +100,7 @@ const SignIn = ({ providers }: InferedProviders) => {
               event.preventDefault();
               signIn(providers?.github.id, {
                 redirect: true,
-                callbackUrl: '/',
+                callbackUrl: '/dashboard',
               });
             }}
           >

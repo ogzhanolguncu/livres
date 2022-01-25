@@ -1,6 +1,8 @@
 import React from 'react';
-import { Flex, VStack, Text, Box } from '@chakra-ui/react';
+import { Flex, Text, Box, Center, Button } from '@chakra-ui/react';
+import { MdLibraryAdd } from 'react-icons/md';
 import { Book } from '@prisma/client';
+import { prisma } from '@lib/prisma';
 
 type Props = {
   book: Book;
@@ -9,13 +11,19 @@ type Props = {
 const cardBreakPoints = ['100px', '240px', '240px', '300px'];
 const fontSizeBreakPoints = ['md', '2xl', '2xl', '3xl'];
 const bookNameBreakPoints = ['md', '4xl', '4xl', '5xl'];
+const addToLibButBreakPoints = ['xs', 'xl', 'xl', '2xl'];
 
 const Card = ({ book }: Props) => {
+  const addBookToLibrary = async () => {
+    console.log('çalıştı');
+  };
+
   return (
     <Flex
       flexDirection="column"
       key={book.id}
       alignItems={['center', 'center', 'flex-start', 'flex-start']}
+      textAlign="left"
     >
       <Box position="relative" width={cardBreakPoints} height={cardBreakPoints}>
         <Flex
@@ -34,31 +42,30 @@ const Card = ({ book }: Props) => {
             {book.name}
           </Text>
         </Flex>
-        {/* {book.status === 0 && (
-					<Text
-						position="absolute"
-						bottom="0"
-						background="rgb(15 14 14 / 29%)"
-						color="#f1f1f1"
-						width="100%"
-						padding={addButtonPaddingBreakPoints}
-						borderBottomRightRadius="md"
-						borderBottomLeftRadius="md"
-						cursor="pointer"
-						fontSize={fontSizeBreakPoints}
-					>
-						Add To Lib
-					</Text>
-				)} */}
       </Box>
+      <Button
+        fontSize={addToLibButBreakPoints}
+        my="1rem"
+        bg="#916bbf"
+        _hover={{ background: '#fff', color: '#3d2c8d8c' }}
+        _focus={{ outline: 'none' }}
+        leftIcon={<MdLibraryAdd />}
+        onClick={addBookToLibrary}
+      >
+        Add to Library
+      </Button>
 
-      <VStack align="flex-start" px="0.5rem" mt="1.5rem" maxWidth="300px">
-        <Text fontSize={fontSizeBreakPoints}>Author: {book.author}</Text>
-        <Text fontSize={fontSizeBreakPoints}>
+      <Center
+        flexDir="column"
+        textAlign={['center', 'center', 'start', 'start']}
+      >
+        <Text w="100%" fontSize={fontSizeBreakPoints}>
+          Author: {book.author}
+        </Text>
+        <Text w="100%" fontSize={fontSizeBreakPoints}>
           Page Number: {book.pageNumber}
         </Text>
-        {/* <Text fontSize={fontSizeBreakPoints}>Completion: {book.status === 0 ? "✔️" : "⌛"}</Text> */}
-      </VStack>
+      </Center>
     </Flex>
   );
 };
