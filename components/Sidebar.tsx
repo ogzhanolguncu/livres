@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Center, SlideFade, Tooltip } from '@chakra-ui/react';
-import { FaSignInAlt, FaMeteor } from 'react-icons/fa';
+import { FaSignInAlt } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { GiBookshelf } from 'react-icons/gi';
 import Link from 'next/link';
@@ -52,16 +52,6 @@ const Sidebar = () => {
           authStatus={status === 'unauthenticated'}
         />
       </SlideFade>
-      <SlideFade in={!loading}>
-        <NavItem
-          icon={FaMeteor}
-          ariaLabel="join"
-          label="Join"
-          to="#"
-          authStatus={status === 'unauthenticated'}
-        />
-      </SlideFade>
-
       <SlideFade in={!loading}>
         <NavItem
           icon={GiBookshelf}

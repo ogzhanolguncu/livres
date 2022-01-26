@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Box, Button, Flex, Heading, Input, Text } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { getProviders, signIn } from 'next-auth/react';
-import { loginSchema } from './validationSchema';
+import { loginSchema } from 'validations/signInValidationSchema';
 import type { InferGetStaticPropsType } from 'next';
 
 type InferedProviders = InferGetStaticPropsType<typeof getServerSideProps>;
@@ -21,8 +21,11 @@ const SignIn = ({ providers }: InferedProviders) => {
 
   const [sentStatus, setSentStatus] = useState<'Sent' | 'Error' | undefined>();
 
-  const onSubmit = async () => {
+  const onSubmit = async (data: { email: string }) => {
     try {
+      signIn(providers?.email.id, {
+        email: data.email,
+      });
       setSentStatus('Sent');
       reset();
     } catch (error) {
@@ -39,9 +42,9 @@ const SignIn = ({ providers }: InferedProviders) => {
     >
       <Flex flexDirection="column" gap="1rem" maxWidth="370px">
         <Heading as="h1" size="4xl">
-          Join Livres!
+          Sign in to Livres!
         </Heading>
-        <Text fontSize="3xl">Join via magic link with your email below.</Text>
+        <Text fontSize="3xl">Sign in via Google, Github or Email.</Text>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="email"
@@ -68,21 +71,20 @@ const SignIn = ({ providers }: InferedProviders) => {
           </Text>
 
           <Button
+            width="100%"
             mt="1rem"
             color="#3D2C8D"
             size="lg"
             type="submit"
             fontSize="2rem"
             variant="solid"
-            disabled={isSubmitting}
-            isLoading={isSubmitting}
             backgroundColor="gray.100"
             _hover={{
               backgroundColor: 'gray.300',
             }}
-            width="100%"
+            isLoading={isSubmitting}
           >
-            <Box>{isSubmitting ? 'Loading' : 'Send magic link'}</Box>
+            <Box>Join with Email</Box>
           </Button>
           <Button
             width="100%"
@@ -105,6 +107,28 @@ const SignIn = ({ providers }: InferedProviders) => {
             }}
           >
             <Box>Join with Github</Box>
+          </Button>
+          <Button
+            width="100%"
+            mt="1rem"
+            color="#3D2C8D"
+            size="lg"
+            type="submit"
+            fontSize="2rem"
+            variant="solid"
+            backgroundColor="gray.100"
+            _hover={{
+              backgroundColor: 'gray.300',
+            }}
+            onClick={(event) => {
+              event.preventDefault();
+              signIn(providers?.google.id, {
+                redirect: true,
+                callbackUrl: '/',
+              });
+            }}
+          >
+            <Box>Join with Google</Box>
           </Button>
         </form>
 
