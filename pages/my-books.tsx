@@ -10,13 +10,10 @@ import Link from 'next/link';
 import { prisma } from '@lib/prisma';
 import { getSession } from 'next-auth/react';
 
-//TODO: ADD EMAIL - PASSWORD REGISTER
-//TODO: ADD TO LIB
-//TODO: ADD PAGE DETAIL
-
 type InferedBook = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-const Dashboard = ({ books }: InferedBook) => {
+const MyBooks = ({ books }: InferedBook) => {
+  console.log({ books });
   return (
     <Flex flexDirection="column" w="100%">
       <Flex
@@ -26,7 +23,7 @@ const Dashboard = ({ books }: InferedBook) => {
         alignItems="center"
       >
         <Heading size="4xl">
-          <Link href="/">Dashboard</Link>
+          <Link href="/">My Books</Link>
         </Heading>
         <Text fontSize="4xl" display={['none', 'none', 'block', 'block']}>
           Book Goal: 4 out of 5
@@ -48,13 +45,13 @@ const Dashboard = ({ books }: InferedBook) => {
   );
 };
 
-export default Dashboard;
+export default MyBooks;
 
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const result = await getSession(context);
-  if (!result) {
+  if (!result?.user) {
     return {
       props: {},
       redirect: {
@@ -63,8 +60,18 @@ export const getServerSideProps = async (
       },
     };
   }
-  const books = await prisma.book.findMany();
+
+  const currentUsersBooks = await prisma.book.findMany({
+    where: {
+      user: {
+        some: {
+          email: result.user.email,
+        },
+      },
+    },
+  });
+
   return {
-    props: { books },
+    props: { books: currentUsersBooks },
   };
 };

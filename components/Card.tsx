@@ -2,10 +2,14 @@ import React from 'react';
 import { Flex, Text, Box, Center, Button } from '@chakra-ui/react';
 import { MdLibraryAdd } from 'react-icons/md';
 import { Book } from '@prisma/client';
-import { prisma } from '@lib/prisma';
 
 type Props = {
-  book: Book;
+  ownedBook?: boolean;
+  book: Book & {
+    user?: {
+      email: string | null;
+    }[];
+  };
 };
 
 const cardBreakPoints = ['100px', '240px', '240px', '300px'];
@@ -13,10 +17,8 @@ const fontSizeBreakPoints = ['md', '2xl', '2xl', '3xl'];
 const bookNameBreakPoints = ['md', '4xl', '4xl', '5xl'];
 const addToLibButBreakPoints = ['xs', 'xl', 'xl', '2xl'];
 
-const Card = ({ book }: Props) => {
-  const addBookToLibrary = async () => {
-    console.log('çalıştı');
-  };
+const Card = ({ book, ownedBook }: Props) => {
+  const isBookOwned = book.user?.[0]?.email || !ownedBook;
 
   return (
     <Flex
@@ -43,17 +45,18 @@ const Card = ({ book }: Props) => {
           </Text>
         </Flex>
       </Box>
-      <Button
-        fontSize={addToLibButBreakPoints}
-        my="1rem"
-        bg="#916bbf"
-        _hover={{ background: '#fff', color: '#3d2c8d8c' }}
-        _focus={{ outline: 'none' }}
-        leftIcon={<MdLibraryAdd />}
-        onClick={addBookToLibrary}
-      >
-        Add to Library
-      </Button>
+      {!isBookOwned && (
+        <Button
+          fontSize={addToLibButBreakPoints}
+          my="1rem"
+          bg="#916bbf"
+          _hover={{ background: '#fff', color: '#3d2c8d8c' }}
+          _focus={{ outline: 'none' }}
+          leftIcon={<MdLibraryAdd />}
+        >
+          Add to Library
+        </Button>
+      )}
 
       <Center
         flexDir="column"

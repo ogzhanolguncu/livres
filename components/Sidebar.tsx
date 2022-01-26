@@ -57,7 +57,7 @@ const Sidebar = () => {
           icon={GiBookshelf}
           ariaLabel="my-books"
           label="My Books"
-          to="#"
+          to="/my-books"
           authStatus={status === 'authenticated'}
         />
       </SlideFade>

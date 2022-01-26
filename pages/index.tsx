@@ -2,15 +2,21 @@ import React from 'react';
 import { Flex, Heading, Text } from '@chakra-ui/react';
 import Card from '@components/Card';
 
-import type { InferGetStaticPropsType } from 'next';
+import type {
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from 'next';
 import Link from 'next/link';
 import { prisma } from '@lib/prisma';
+import { getSession } from 'next-auth/react';
 
 //TODO: ADD EMAIL - PASSWORD REGISTER
 //TODO: ADD TO LIB
 //TODO: ADD PAGE DETAIL
 
-type InferedBook = InferGetStaticPropsType<typeof getServerSideProps>;
+export type InferedBook = InferGetServerSidePropsType<
+  typeof getServerSideProps
+>;
 
 const Home = ({ books }: InferedBook) => {
   return (
@@ -33,11 +39,11 @@ const Home = ({ books }: InferedBook) => {
         gap="3rem"
         flexWrap="wrap"
         justifyContent="center"
-        alignItems="center"
+        alignItems="flex-start"
         mx="0.5rem"
       >
         {books.length > 0 &&
-          books.map((book) => <Card book={book} key={book.id} />)}
+          books.map((book) => <Card book={book} key={book.id} ownedBook />)}
       </Flex>
     </Flex>
   );
@@ -45,8 +51,21 @@ const Home = ({ books }: InferedBook) => {
 
 export default Home;
 
-export async function getServerSideProps() {
-  const books = await prisma.book.findMany();
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const result = await getSession(context);
+
+  const books = await prisma.book.findMany({
+    include: {
+      user: {
+        where: {
+          email: result?.user?.email,
+        },
+        select: {
+          email: true,
+        },
+      },
+    },
+  });
 
   return {
     props: { books },
