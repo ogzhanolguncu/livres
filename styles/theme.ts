@@ -1,17 +1,19 @@
 import { extendTheme } from '@chakra-ui/react';
 
-//COLOR PALETTE
-// "900": "#1C0C5B",
-// "600": "#3D2C8D",
-// "300": "#916BBF",
-// "100": "#C996CC",
+//PRIMARY COLORS
+// "900": "#5a4dc1",
+// "600": "#6f60ea",
+// "300": "#3b3186",
+// "100": "#1b1a29",
+// "100": "#ffffff",
+// "100": "#151421",
 
 const theme = extendTheme({
   styles: {
     global: {
       'html, body': {
         color: '#fff',
-        backgroundColor: '#1C0C5B',
+        backgroundColor: '#1b1a29',
       },
     },
   },

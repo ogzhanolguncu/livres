@@ -1,12 +1,12 @@
 import React from 'react';
-import { Flex, Heading, Text } from '@chakra-ui/react';
+import { Flex, Heading, Link, Text } from '@chakra-ui/react';
 import Card from '@components/Card';
 
 import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from 'next';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { prisma } from '@lib/prisma';
 import { getSession } from 'next-auth/react';
 
