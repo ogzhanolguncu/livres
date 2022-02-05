@@ -18,8 +18,8 @@ const theme = extendTheme({
     },
   },
   fonts: {
-    heading: 'Dongle, sans-serif',
-    body: 'Dongle, sans-serif',
+    heading: 'Inter, sans-serif',
+    body: 'Inter, sans-serif',
   },
 });
 

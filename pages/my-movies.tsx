@@ -13,7 +13,6 @@ import { getSession } from 'next-auth/react';
 type InferedBook = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const MyBooks = ({ books }: InferedBook) => {
-  console.log({ books });
   return (
     <Flex flexDirection="column" w="100%">
       <Flex

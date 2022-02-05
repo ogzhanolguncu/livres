@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Text, Box, Center, Button } from '@chakra-ui/react';
+import { Flex, Text, Box, Button } from '@chakra-ui/react';
 import { MdLibraryAdd } from 'react-icons/md';
 import { Book } from '@prisma/client';
 
@@ -12,11 +12,6 @@ type Props = {
   };
 };
 
-const cardBreakPoints = ['100px', '240px', '240px', '300px'];
-const fontSizeBreakPoints = ['md', '2xl', '2xl', '3xl'];
-const bookNameBreakPoints = ['md', '4xl', '4xl', '5xl'];
-const addToLibButBreakPoints = ['xs', 'xl', 'xl', '2xl'];
-
 const Card = ({ book, ownedBook }: Props) => {
   const isBookOwned = book.user?.[0]?.email || !ownedBook;
 
@@ -27,27 +22,23 @@ const Card = ({ book, ownedBook }: Props) => {
       alignItems={['center', 'center', 'flex-start', 'flex-start']}
       textAlign="left"
     >
-      <Box position="relative" width={cardBreakPoints} height={cardBreakPoints}>
+      <Box position="relative" width={'150px'} height={'150px'}>
         <Flex
-          transition="all 0.5s ease"
-          boxShadow="20px 38px 34px -26px rgb(0 0 0 / 20%)"
           borderRadius="md"
-          width={cardBreakPoints}
+          width="160px"
+          height="210px"
           backgroundColor="#3d2c8d8c"
           border="3px solid #e76bde"
-          height={cardBreakPoints}
           alt="cover"
-          justifyContent="center"
-          alignItems="center"
+          justifyContent="flex-start"
+          alignItems="flex-start"
         >
-          <Text fontSize={bookNameBreakPoints} textAlign="center">
-            {book.name}
-          </Text>
+          <Text fontSize="md">{book.name}</Text>
         </Flex>
       </Box>
       {!isBookOwned && (
         <Button
-          fontSize={addToLibButBreakPoints}
+          fontSize="xs"
           my="1rem"
           bg="#916bbf"
           _hover={{ background: '#fff', color: '#3d2c8d8c' }}
@@ -57,18 +48,6 @@ const Card = ({ book, ownedBook }: Props) => {
           Add to Library
         </Button>
       )}
-
-      <Center
-        flexDir="column"
-        textAlign={['center', 'center', 'start', 'start']}
-      >
-        <Text w="100%" fontSize={fontSizeBreakPoints}>
-          Author: {book.author}
-        </Text>
-        <Text w="100%" fontSize={fontSizeBreakPoints}>
-          Page Number: {book.pageNumber}
-        </Text>
-      </Center>
     </Flex>
   );
 };
