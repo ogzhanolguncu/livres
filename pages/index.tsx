@@ -1,11 +1,12 @@
 import React from 'react';
-import { Flex, Grid, GridItem, Image } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, Image } from '@chakra-ui/react';
 
 import type { InferGetServerSidePropsType } from 'next';
 
 // import { prisma } from '@lib/prisma';
 // import { getSession } from 'next-auth/react';
 import axios from 'axios';
+// import styled from '@emotion/styled';
 
 import type { DataList } from '../typings/types';
 import { MOVIE_API_URL } from '@constants/movieUrls';
@@ -31,17 +32,26 @@ const Home = ({ movies }: InferedMovies) => {
       >
         {movies &&
           movies.results.map((movie) => (
-            <GridItem key={movie.id}>
-              <Flex borderRadius="lg">
-                <Image
+            <GridItem
+              key={movie.id}
+              backgroundImage="linear-gradient(45deg, darken(#13abdb,5%), #B10DC9)"
+            >
+              <Image
+                src={`${MOVIE_API_URL.imagePath}/${movie.poster_path}`}
+                alt={movie.title}
+                rounded="lg"
+                width="auto"
+                height="auto"
+                objectFit="cover"
+              />
+              {/* <CustomImage
                   src={`${MOVIE_API_URL.imagePath}/${movie.poster_path}`}
-                  alt={movie.title}
-                  rounded="lg"
                   width="auto"
                   height="auto"
                   objectFit="cover"
-                />
-              </Flex>
+                  alt={movie.title}
+                  rounded="lg"
+                /> */}
             </GridItem>
           ))}
       </Grid>
@@ -58,3 +68,15 @@ export async function getStaticProps() {
     props: { movies: result.data },
   };
 }
+
+// const CustomImage = styled(Box)`
+//   width: 100%;
+//   height: 200px;
+//   object-fit: 'cover';
+//   background-image: ${(props) => `linear-gradient(
+//       to bottom,
+//       rgba(245, 246, 252, 0.52),
+//       rgba(117, 19, 93, 0.73)
+//     ),
+//     url(${props.src});`};
+// `;
