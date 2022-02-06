@@ -10,26 +10,28 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <SessionProvider session={pageProps.session}>
-        <Flex>
+        <Flex height="100%" width="100%">
           <Box
             backgroundImage={'/wave.svg'}
-            height="100vh"
             width="45px"
+            height="100%"
             backgroundSize="cover"
             padding="0"
-            position="absolute"
+            position="fixed"
           />
           <LeftMenu />
+
           <Flex
             direction="column"
-            marginLeft="5rem"
-            marginTop="4rem"
-            width="100%"
+            mt={['3.2rem', '3.2rem', '4rem', '4rem']}
+            ml={['45px', '45px', '45px', '75px']}
+            w="100%"
           >
-            <Flex width="70%">
+            <Flex maxW="85%">
               <Heading size="lg">Home</Heading>
               <Input
-                marginLeft="5rem"
+                display={['none', 'none', 'initial', 'initial']}
+                ml="5rem"
                 variant="filled"
                 placeholder="Filled"
                 backgroundColor="#151421"

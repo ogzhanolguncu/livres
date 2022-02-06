@@ -1,54 +1,60 @@
 import React from 'react';
-import { Flex } from '@chakra-ui/react';
-import Card from '@components/Card';
+import { Flex, Grid, GridItem, Image } from '@chakra-ui/react';
 
-import type {
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from 'next';
+import type { InferGetServerSidePropsType } from 'next';
 
-import { prisma } from '@lib/prisma';
-import { getSession } from 'next-auth/react';
+// import { prisma } from '@lib/prisma';
+// import { getSession } from 'next-auth/react';
+import axios from 'axios';
 
-export type InferedBook = InferGetServerSidePropsType<
-  typeof getServerSideProps
->;
+import type { DataList } from '../typings/types';
+import { MOVIE_API_URL } from '@constants/movieUrls';
+export type InferedMovies = InferGetServerSidePropsType<typeof getStaticProps>;
 
-const Home = ({ books }: InferedBook) => {
+const Home = ({ movies }: InferedMovies) => {
   return (
     <Flex
-      marginTop="2rem"
-      gap="3rem"
-      flexWrap="wrap"
       justifyContent="flex-start"
       alignItems="flex-start"
-      mx="0.5rem"
+      height="100%"
+      my="2rem"
     >
-      {books.length > 0 &&
-        books.map((book) => <Card book={book} key={book.id} ownedBook />)}
+      <Grid
+        templateColumns={[
+          'repeat(2, 1fr)',
+          'repeat(3, 1fr)',
+          'repeat(4, 1fr)',
+          'repeat(6, 1fr)',
+        ]}
+        w="85%"
+        gap={6}
+      >
+        {movies &&
+          movies.results.map((movie) => (
+            <GridItem key={movie.id}>
+              <Flex borderRadius="lg">
+                <Image
+                  src={`${MOVIE_API_URL.imagePath}/${movie.poster_path}`}
+                  alt={movie.title}
+                  rounded="lg"
+                  width="auto"
+                  height="auto"
+                  objectFit="cover"
+                />
+              </Flex>
+            </GridItem>
+          ))}
+      </Grid>
     </Flex>
   );
 };
 
 export default Home;
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const result = await getSession(context);
-
-  const books = await prisma.book.findMany({
-    include: {
-      user: {
-        where: {
-          email: result?.user?.email,
-        },
-        select: {
-          email: true,
-        },
-      },
-    },
-  });
+export async function getStaticProps() {
+  const result = await axios.get<DataList>(MOVIE_API_URL.popular);
 
   return {
-    props: { books },
+    props: { movies: result.data },
   };
 }
